@@ -1,7 +1,7 @@
 package com.my.member_app.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
+//import jakarta.persistence.*;
+//import lombok.Data;
 
 @Data
 @Entity
@@ -13,7 +13,6 @@ public class Member {
 
     @Column(length = 40, nullable = false)
     private String name;
-
     private int age;
     private String address;
 }
