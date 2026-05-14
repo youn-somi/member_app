@@ -1,6 +1,7 @@
 package com.my.member_app.controller;
 
 import com.my.member_app.dto.MemberDto;
+import com.my.member_app.dto.SerchDto;
 import com.my.member_app.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -93,6 +94,19 @@ public class MemberController {
         redirectAttributes.addFlashAttribute("message",
                 " 정상적으로 수정되었습니다.");
         return "redirect:/member/view";
+
+
+
+
+    }
+    @GetMapping("/search")
+    public String serch (SerchDto serchDto,
+                         Model model) {
+        log.info("SerchDto = " + serchDto);
+        List<MemberDto> result = memberService
+                .search(serchDto.getType(),serchDto.getKeyword());
+        model.addAttribute("lists", result);
+        return "showMember";
 
 
 
