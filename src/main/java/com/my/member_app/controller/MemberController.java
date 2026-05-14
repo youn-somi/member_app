@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-
+import jakarta.persistence.*;
+import lombok.Data;
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
@@ -51,15 +52,51 @@ public class MemberController {
     }
     @PostMapping("/delete")
     public String delete( @RequestParam("deleteid")Long deleteid,
-            RedirectAttributes redirectAttributes {
+            RedirectAttributes redirectAttributes) {
     log.info("======== deleteid : " + deleteid);
     memberService.delete(deleteid);
-    redirectAttributes.addFlashAttribute(redirectAttributes: "message",
-        redirectAttributes "정상적으로 삭제되었습니다.");
+    redirectAttributes.addFlashAttribute( "message",
+        "정상적으로 삭제되었습니다.");
     return "redirect:/member/view";
 
     }
 
+    @GetMapping("update")
+    public String updateFormView(Model model,
+                                 @RequestParam("updateid")Long updateid,
+                                 RedirectAttributes redirectAttributes){
+      //1. 선택한 아이디를 가져오는  확인
+        log.info("========updateid : " + updateid);
+        //2. 해당 아이디를 검색해서 dto 받아온다.
+        MemberDto updateDto = memberService.findById(updateid);
+        log.info("========updateDTO : " + updateDto);
+        //3, updateDto 비어있는지 확인- > member/view
+        if(updateDto == null) {
+            redirectAttributes.addFlashAttribute("message","선택한 데이타가 없습니다.");
+            return "redirect:/member/view";
+
+        }
+        else {
+            //4. ahepfdp ekadktj updateForm 에 보낸다
+            model.addAttribute("dto", updateDto);
+            return "updateMember";
+
+        }
     }
-}
+    //update > post
+    @PostMapping("/update")
+    public String update(@ModelAttribute("dto")MemberDto dto,
+                         RedirectAttributes redirectAttributes) {
+        //찍어보기
+        log.info("updatedDto : " + dto);
+        memberService.insert(dto);
+        redirectAttributes.addFlashAttribute("message",
+                " 정상적으로 수정되었습니다.");
+        return "redirect:/member/view";
+
+
+
+    }
+    }
+
 

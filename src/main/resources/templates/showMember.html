@@ -39,7 +39,8 @@
             <td th:text = "{나이}"> 20</td>
             <td th:text = "{주소}">  서울</td>
             <td>
-            <form>
+            <form th:action="@{/member/update" method="get">
+                <input type=" hidden" name ="updateid" th:value="*{id}">
                 <input type="submit" value="수정">
             </form>
             </td>
