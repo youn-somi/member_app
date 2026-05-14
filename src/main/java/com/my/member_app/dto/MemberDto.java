@@ -31,9 +31,9 @@ public class MemberDto {
                 member.getId(),
                 member.getName(),
                 member.getAge(),
-                member.getAddress();
+                member.getAddress()
 
-        )
+        );
     }
 
 }
