@@ -6,25 +6,26 @@
 </head>
 <body>
     <h1>회원수정 </h1>
-<form>
+<forma th:acction="@{/member/update}" method = "post" th:object="${dto}">
+    <input type="hidden" name="id" th:value="*{id}"
     <div>
-        <label>ID : 1</label>
+        <label>ID : <span th:text="*{id}"></span></label>
     </div>
     <div>
         <label>이름</label>
-        <input type="text">
+        <input type="text" th:field="*{name}" >
     </div>
     <div>
         <label>나이</label>
-        <input type="number" min="0" max="120">
+        <input type="number" min="0" max="120" th:field="*{age}" >
         <div>
             <label>주소</label>
-            <input type="text">
+            <input type="text" th:field="*{address}" >
         </div>
         <input type="submit" value="수정">
 
     </div>
-</form>
+</forma>
     <a th:href="@{/member/view}" > 목록으로 돌아가기 </a>
 </body>
 </html>

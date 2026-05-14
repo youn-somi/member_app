@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +37,7 @@ public class MemberService {
       //Entity List - > Dto List 로 변환 한 후 리턴 한다.
       //깡통 DtoList 만들기
      // List<MemberDto> dtoList = new ArrayList<>();
-
+      List<MemberDto> dtoList = new ArrayList<>(); // 이 라인을 추가하세
       for (Member member : members){
         dtoList.add(MemberDto.toDto(member));
 
@@ -45,7 +47,7 @@ public class MemberService {
       return members
               .stream()
               .map(x-> MemberDto.toDto(x))
-              .dtolist();
+              .toList();
     }
 
 
@@ -58,5 +60,13 @@ public class MemberService {
   public void delete(Long deleteid) {
       memberRepository.deleteById(deleteid);
   }
+
+  public MemberDto findById(Long updateid) {
+      Optional<Member> member= memberRepository.findById(updateid);
+// Optional 로 받은 객체가 비어있으면
+      if (member.isPresent()) {
+        return MemberDto.toDto(member.get());
+      } else return null;
+    }
 }
 
